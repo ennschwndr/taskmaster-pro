@@ -45,42 +45,52 @@ var saveTasks = function() {
 };
 
 $(".list-group").on("click", "p", function() {
-    $(".list-group").on("blur", "text-area", function(){
-        var text = $(this)
-        .val()
-        .trim();
-       
-        var status = $(this)
-            .closest(".list-group")
-            .attr("id")
-            .replace("list-", "");
 
-        var index = $(this)
-            .closest(".list-group-item")
-            .index();
-    
-        tasks[status][index].text = text;
-        saveTasks();
-        }
-        );
-        var text = $(this)
-        .text()
-        var textInput = $("<textarea>")
-        .addClass("form-control")
-        .val(text)
-        $(this).replaceWith(textInput)
-        textInput.trigger("focus");
+  var text = $(this)
+    .val()
+    .trim();
 
-        var taskP = $("<p>")
-            .addClass("m-1")
-            .text(text);
+  var textInput = $("<textarea>")
+    .addClass("form-control")
+    .val(text)
+    $(this).replaceWith(textInput)
+    textInput.trigger("focus");
 
-        $(this).replaceWith(taskP);
+    var taskP = $("<p>")
+      .addClass("m-1")
+      .text(text);
+
+    $(this).replaceWith(taskP);
     }    
 );
 
+$(".list-group").on("blur", "textarea", function(){
+
+  var text = $(this)
+    .text()
+    .trim();
+ 
+  var status = $(this)
+      .closest(".list-group")
+      .attr("id")
+      .replace("list-", " ");
+
+  var index = $(this)
+      .closest(".list-group-item")
+      .index();
+
+  tasks[status][index].text = text;
+  saveTasks();
+
+  var taskP = $("<p>")
+  .addClass("m-1")
+  .text(text);
+
+  $(this).replaceWith(taskP);
+});
+
 $(".list-group").on("click", "span", function() {
-    // get current text
+    
     var date = $(this)
       .text()
       .trim();
@@ -96,7 +106,7 @@ $(".list-group").on("click", "span", function() {
 });
 
 $(".list-group").on("blur", "input[type='text']", function() {
-    // get current text
+    
     var date = $(this)
       .val()
       .trim();
